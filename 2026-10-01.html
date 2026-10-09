@@ -1,0 +1,132 @@
+<title>LazyDiary</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{ color-scheme:light dark; }
+body{ margin:0; min-height:100svh; display:grid; place-items:center; padding:1.5rem;
+  background:#faf8f4; color:#2b2724; font-family:"Zen Kaku Gothic New",system-ui,sans-serif; }
+@media (prefers-color-scheme:dark){ body{ background:#16130f; color:#ece7de; } }
+.gate{ width:min(34rem,100%); text-align:center; }
+.gate form{ max-width:22rem; margin:0 auto; }
+.gate .eyebrow{ font-family:"Jost",sans-serif; font-size:.72rem; letter-spacing:.22em;
+  text-transform:uppercase; opacity:.55; }
+.gate h1{ font-weight:400; font-size:1.6rem; margin:.6rem 0 1.8rem; }
+.gate input{ width:100%; box-sizing:border-box; padding:.8rem .9rem; font-size:1rem;
+  font-family:inherit; border:1px solid currentColor; border-radius:.4rem;
+  background:transparent; color:inherit; }
+.gate button{ margin-top:.7rem; width:100%; padding:.8rem; font-family:"Jost",sans-serif;
+  letter-spacing:.1em; font-size:.85rem; border:0; border-radius:.4rem; cursor:pointer;
+  background:#2b2724; color:#faf8f4; }
+@media (prefers-color-scheme:dark){ .gate button{ background:#ece7de; color:#16130f; } }
+.gate p{ font-size:.78rem; opacity:.6; margin-top:1.4rem; line-height:1.8; }
+.err{ color:#b3402f; font-size:.82rem; min-height:1.2em; margin-top:.7rem; }
+
+/* --- しくみの説明（合言葉を入れる前に読める部分） --- */
+.how{ margin-top:3.4rem; padding-top:2.2rem; border-top:1px solid currentColor;
+  border-color:color-mix(in srgb,currentColor 18%,transparent); text-align:left; }
+.how h2{ font-weight:400; font-size:.95rem; letter-spacing:.02em; margin:0 0 1.6rem;
+  text-align:center; }
+.how ol{ list-style:none; margin:0; padding:0; counter-reset:step; }
+.how li{ counter-increment:step; position:relative; padding:0 0 1.5rem 3rem; }
+/* 番号どうしを縦線でつなぐ＝流れに見せる */
+.how li::after{ content:""; position:absolute; left:.95rem; top:2rem; bottom:0;
+  border-left:1px dashed currentColor; opacity:.22; }
+.how li:last-child::after{ display:none; }
+.how li::before{ content:counter(step); position:absolute; left:0; top:0;
+  width:1.9rem; height:1.9rem; border-radius:50%; display:grid; place-items:center;
+  font-family:"Jost",sans-serif; font-size:.85rem;
+  border:1px solid currentColor; opacity:.75; }
+.how b{ display:block; font-weight:500; font-size:.92rem; margin-bottom:.15rem; }
+.how span{ display:block; font-size:.8rem; line-height:1.85; opacity:.62; }
+.how .tag{ display:inline-block; font-family:"Jost",sans-serif; font-size:.62rem;
+  letter-spacing:.14em; text-transform:uppercase; padding:.1rem .45rem; margin-left:.45rem;
+  border-radius:.2rem; vertical-align:.12em; opacity:.55;
+  border:1px solid currentColor; }
+.how .aside{ margin:.55rem 0 0; padding:.7rem .9rem; font-size:.76rem; line-height:1.8;
+  opacity:.62; border-radius:.35rem;
+  background:color-mix(in srgb,currentColor 6%,transparent); }
+.gate .how p{ margin-top:1.8rem; text-align:center; }
+</style>
+<div class="gate">
+  <div class="eyebrow">LazyDiary</div>
+  <h1>合言葉を入力してください</h1>
+  <form id="f"><input id="pw" type="password" autocomplete="current-password" autofocus>
+  <button type="submit">ひらく</button></form>
+  <div class="err" id="e"></div>
+  <p>リンクを渡された方だけが読めるページです。<br>合言葉は書いた本人にきいてください。<br>一度入れると、この端末では30日間そのまま読めます。</p>
+
+  <section class="how">
+    <h2>手書きの日記が、ここに出るまで</h2>
+    <ol>
+      <li><b>ペンで書く<span class="tag">iPad</span></b>
+        <span>紙の手帳と同じように、GoodNotes に1日1ページ。人がやるのはここだけで、
+        以降は一切さわりません。</span></li>
+      <li><b>勝手に届く<span class="tag">Drive</span></b>
+        <span>書いたノートは Google Drive を通って、家の Mac に降りてきます。
+        スマホで撮った写真も同じ経路で合流します。</span></li>
+      <li><b>AI が読む<span class="tag">毎晩 22:30</span></b>
+        <span>Mac の中で Claude が起きて、まだ読んでいないページだけを探し、
+        手書きの文字を起こします。577ページ全部ではなく、増えた分だけ。
+        変更がなければ何もせず寝ます。</span>
+        <div class="aside">同じ日に撮った写真も自動で集めてきて、
+        本文に書かれている場面と結びつくものだけを選んで貼ります。</div></li>
+      <li><b>伏せる<span class="tag">公開版</span></b>
+        <span>そのままでは出しません。人の名前、第三者の顔が写った写真、
+        書きすぎたことを外した「公開版」を別につくります。
+        元の原文は手元にだけ残ります。</span></li>
+      <li><b>ここに出る<span class="tag">GitHub Pages</span></b>
+        <span>公開版だけがサイトになって置かれます。中身は暗号化してあるので、
+        合言葉を知っている人しか読めません。</span></li>
+    </ol>
+    <p>書く以外は全部、置いてある Mac が勝手にやっています。</p>
+  </section>
+</div>
+<script>
+const PAYLOAD = {"salt": "bGF6eWRpYXJ5obLD1OX2Bw==", "iv": "lulxo1fqgFz8cNXc", "ct": "pOENXyMvLgNeBipLg0P9CAdTNHpR2Q4id2bdpcfpkoDRWJEQew91LVallGv0JpsJdxbzqKfedMy3Z9ZNLQqM1dePUmG3RBuYyiYBK0BK6leY8aRBi9XR1jSkKFBBK3JEp5osicjfL2Zj9WxyUcvojMgGSAZMVl48cMyq/FrrkjXaaMtv8/YUDcZsk32AcbBjCGJi3g5Che6Xk+JBWVFOnDtsD7Yx6e9VLDktfzrEpD9XRMwKuH/uj+NPJBL9owzLADfBbH+nulXFbqr3tMMGF8HsIEIRE+42dKjqIMfxfjDorxrbyPPnYzuEI0yt1s626WRqic2wiTxkervyEqgUXmhlBmC7r9XMrII8n/l1CVRt/0Na+WqJZAiFBg36P4o5gka4OTszHI8/jVbNi/dCr/d7GXHIiDsNJfrQ6ErdMIG3aEkhWt6CGctkaZQjZUTv2szpQ116on4MY3ihJV7WdVawDWFuZJSB7+ABgLnqbCwingeGJUoYZ3pRMKoqhwEDKDcvUG0iuQQmITC0R97qkM86Nfo6wVZ8FmFNJFLKd2n1Y6oVucobgpVXSPCs19Ez5GHqTmhxsatSyXW7vj7j9tv+MTp7wryJRPXabDJwgLnn2wsieCH5mVvIYvdFz4YZamortnELWMyMSh8nuZeSnDw1FN0UcYlwnPPEQ5iH/nNoNiiKfa6muyM8EEb8XPl5b641zTioqdw8ya5Lfo1fdxVHNOl/kiolizJmYhS3gsS0J/1LQyYKtijd99aJpQMtS4exsMTtaP+mjrWILukBLTCP9z3sah5NH/zHJgj/Ta5P15j+83dDthlKfry8wBiBBBaPMCDJZR+1BWZNRhgD8X01OqJp7nnqy9daU2d18WaNw9UgDboNhRAGwhatQV4o1OJEPFTjtNCcoHyHb15jPuXpprD9m5lY4/aMxwKWDCaUIrcR4TAmJLaMNS/136WECmuUaDzkDRVoxXDM+nHK+37fN1cPrdyMFoR95TFGFertSpsO/ijDQ7sl9HR2dAAN5fNoZE53iiRnS3+afLmCr5I0/wTFK3qSt/3w8Bn9cyz216ASv9bFwGL8TtPdV38MAiTb9aaxJc69kOiP492sDlItZOYX29CKdAfAO5r4gn3tDrb1Nzc+q9p3ozTbOE0cRW/8LKLGuYxLY5gNJ8GP3bJTibxHsjI6ftcsgvF4Vdb0Yhe/06R+EGpKy2z8u6gqujS4uOSUe59fcBtlf/bpbdnoUNmFHhBXQMiYcVHnW3ZAmgNk8HXcTUhE0i8I0pMPpfJBdASRuZ2bU6PtbQ3fSyMBkRL2n2AJPVa+k0hLalMVpV/KF0RLwdaoZjYloSVgo1HQ74uaXuDEYtwM5cfCSwZlTubjBZDN+xlXiPwDuua3tis7yR9ZzkurpS6U7JmoV2SiM+LscSleZAmmjdZXOWgonCvZsrzTQ1K8GUUuzrkBlkb2XbA7vfwqOT8yL24j1NMz04G5GR/EBiOxPmslVyBmYhprqLaM3HxcrLKIGBISCmAlrKsMaVJjetN9n+xhynZD7mbO1ZCQogRKneMTwhFoNAX+KJK6XxaAnCywKtx2PYMTdiTjxvspacKeIj/nLMyDVPH0+aQF+pAHVN3OZoQr4RCPpQsoukOKHk0FlDPvjXEk+Xj41fdwAsTKM4cuUrMXC4iILaR6pfW5m00m1WXeqfI46awiOdBGpS81yNisBR312xvExmseAEL4qHoBPjIn5mYqhMv39AWoMEqyo+Vg9t+VT7AIuXwhYJlxG+xoKxkZWEL3XXezvBC/bXiEXgWoKB5wAbCBO2ytWHVSbO8n8Pw1/ohA1I3fC89aAvfgpEVgbLsmokl+1W4eqeEwU+Q2S6wce7PmLCerIUo55ND8vju5JlUKCgowJl7Tw6fAs2PkftseZqneGGY4+DKBnKfJuiXKABxcgtCDU1Zh1DPhiUsrluU1neAFkQK/wrnUfuF5oHzhtl6PWYkl9CUPxxMEWwIKtblvoa4b/m2MViWO6vvisadhknmnAX2n4emhsp/XA+cg8h8G2MvF01QgJh0pf9TT+8iO4vwE3/hSFjWghdojEVFosVBv/9xNPiETLhl4qeofdOxY3AbOKMhs1u5aCoQ5Mi0nQWZ4LLYqmt4Q7sukCYNedO+VHk5OT3GjdiWmCdmbZ06xf6I07MVIZSIt50YK4GObrFs4cWN1rRwJ3GI04zErQOJveALHZMXotF24cV+/eFs9nDKPGK5zYtvRGOBx/Cp2yFaebm12hljM1w+8FMBL6qhkj/+OpI/kbS/7BJ7PfRL0Sh3Y7BKW4zHzXLT84eH8AnnrCeOrL3W2AtI+gr7b5CWl+9zVMc0qaOh1PHKtUjLTuCpWTkGTcDVz9QEkLiALcI79ruHKKklr/glk8MvuUS8zSdmBY5lVRG2p6Fp+IBwLB4R2ECP9cHWsrhjXCrKYT4OHBtuY26tru5yzDav7SRMddrBd3qvGjq6lYzPIZzZJvre+IAdWVGaxB3J8XpgJclgxaRwQlnbttIY1H8WtWyHfDHuFKievahOvON4fPOmyJWmiXqsnFCBxYbAQtnT7rg1QvZ9BlWJYwoCiwW6yZedpOYRwZ7y6hIJYJJ1111PTVmlbgmLQalZH/+gtaU5V1KEhJSNYaoELJVF4toVRvsWbkBH+h8bIfheWIUIQUxziqFK9NZu2k0d0OkKSAccloPlZbJJSmfjoSLoec/IcJk/Qy6c7WOdYwtjVm7y4XysRBrjPyc7tdm1LHr1X3Aip/nxWacrMOtTyUb7F3NdDa92Z1lqsEw6224Zf5i7ErK9H5GsHxroVH0DYTqzSBiwD/qebkgqe+4OPuJeHMCYc9pc/SPI0ZKYcdtcCqyTo8Rj44ii4kwYA6bowImK59Xw2cILYviJSjvM2+K593E96zceS/YT2caY9kWI/ACsarRJQz7x5nXfDque03TiDQVntHuxpa0TjFYSWEG/BzXOP4/w7qwl76q4uwxD6aV63ZK8YYi7f/DxFvjKMjNpI7dJW3mYamRnvjeIQ4RePgfMdeRtANei++3r2ZvjyPDanq59YvQTw20bP55HH97wqTA9zXSFq9p0riimgIBh+i95t+S0YhZxMT/xOTUkx1eV0wdeRXZgD88ZH5LhPDcBgb/5JUW6/8z0u54u7234oWjrpM2i/ERUtJnbAP+v6dU7ggeqn/jsQurFhAWDJsqTcV5W2vuKtJ9FAUVNde7eOBFPY+x6/who86hF46ft/MCdn16ITxXpj+t/PYuB/PgQo/kowHi5G5/tecSQXnHdJolgP4nl8oQJA0i0dVCwSj5TFlDpoIaIhfP8RB0VcTXvH7u6Vz3gnsJ5dWyRegFtuNW34idkZxWqwb8kA3tfp1EpZ16i0eAPrrbYMfH1ut1hutWZxRhpb4u2gy7ppU9j1qkrifqNYpN7cqWlC10Gro5Oum1J7oCpJSlDbNOxgg78Pr/0FzXCIlp9RToXdv9bQWKg/aZxmjeVNh5tyVEiXlgHB3XxMGgOpcU5WvarWMt7nDwvfbE9MwgArACx/1EgLUiBDPOXH7cWxBl+sgaPb9jxlxJbdzY6OfsXsW+f4kJqGEG9l2hxl4pH8XX0Vd0VdZ1ipVAvGf6Env/8QEk7IkW89RdU4MwfdSzarbB0bp9fkxaG3xY8aLIdf290HMwmxXFXFRN6dXv+naoMS/cCzET3tTUjXOpeFW9QgrDtd6CoL859c5YbyT0kkIFTaxxN0RKfA055n+Y8Rbn25TAduXxN8SqVJ1+NHGdVpYHTBmYwqA3ooZ3xa2hXD5XMSg67aNccxv2dCW+GphGkZqOptAgrCgJuIgl7Dmx+e5BYfgBzeyb9XzMZrcsGMKfMzDtsR1jYhgLLALFXOD2AxTV05KXCEJ0SfdxyoVseydbFwsM7/9zcCXVcWcg6gTD1My3HufjuW2DkGPnc60L+peG7E12AdDlZFKz9jI62Y4zyVQu+kytH6MnNB6fWhYaC4uVOKYhYoGCWpInnFnvOaE09yYLD9adiNp6lbdCpS+0MmwTzeVSeJqARlqSTUYHZDEt+GpUhzvD91u8g/Tgd3frcSdvco7irU1rfEf8u59EO4EC6nuou5fSTX+ionxelmyAgsk4kij1bLk16Bw74Vc4hjk5p76cmRMNLzHhC49wUAKPFWEgBVlTsKG9aPyWMsDEANav0Rwz+zW4uP55834qtAXAZ4+R9ZXYqBf24gqYLK3SvNItfK2WYRMhfJMgLXRPn6+w+jxtTpkByhsR6Geg7dr5+mkzvkaxCaQbbmUW8Zk+ymE/jZG+RP+sQtv18K69H2Fj+LeiY6Z1Oz14vo5pYDyarcgP1FtxAfcuuhZA3SpRTUrQAaQmqwhRuI6L3rqSUzF8K0mMLud9ZQ3oqdIb3OpPjkhqql4I8osjoBHQwujh+Lw2FiK65W9zFoe3uVdIQwdgLEv8CpQzbVIdM3R4W32yR2O1SWM9mjUqHXxyF2ZeUtMo/WubZHGbiSxeec/1nWFlJEGdClke669xUjyc+GroX8a6IBJsClheag42yr9e47JbFNPinfBCfapt9ovhhhB/kBCgakBH3+oOMrnAO5PCqah1B0h5t7qAmyb1/bLsvwtwhQ5uR8GvzI2p0nhFJrxg/BsZY9MR8L5z/ZYM2YBRIBv4Kd2aNYWUy933izsNTO74V//fEgGIJlYXMaElj22xWW0LCSRc9RF1+1G+g3pMw857xVgWuC+HlJWsNcsP4nUE516AXdKsATKk6UjWN0Etd0dNI7qRuSosi5S8+zUXDvZFes91Eh9qKAzzKeJYSGRAfXkoi2+6gFdd/dgUayIWYf1nYNzGbHiKiRV9s4BiXOMlgSnWmG+lYVHEl65MnGMdSR1rKf+0J6J9Lq961v9wREn7CTIqYH9VGpoAYUaMRTTROoEjy2CezOTrKuzc0doqjnC6OHSX7REz0G0B45Cc7g6IIi5wr295VtvD0H9Qsja7bKFEtvfx780dqNhTBfqj2T2wRWn5aEsg1P4gwxIn665xphJJBisB2wdfLhZyt9d39cJEHaXa7VHnu1MEdZ93C7q3mD86IgSYnxIOUwItYV+ZaCoZje725lyzniftzScIZRERlRdvA0rBagfX+8UH5MU2ujQ/X70twZtQ57IpLtw5IezOccm7TZsndM1rpJR/9x951OB6PsMTugTaOhkT9lnYwGuBKo6IV79IYS2hgZi7AbrSvJTKnVz1RGqhAIx/Otgl8gsY4ZJlE0UKaawduPsZhMd6XtXE3G+w2CoVwvKuKYiebQMwImi5TQKyvIx8Ha+8gZ/kfnQ3TLehLFUwqPDnVQOTuadYUaJNzfEsQZ11bYsMSCs86Oa+ztDpK3Kz688cDhT3IF9l5P6TKu03gi0g/KBDYS13c7bWepA2k524ICzehBX6p6ITlWnxvsjaKhzflzIIIZHOpjBqbNQyVH8r9JQspZCq0YRCBpPW5Y+Ct1PRr7MLMQ6ho606p7hIbHrlnPblUfDeSuD3Wk1icbPSduYri2J7wfJSXaQ84Ui07UGiYZg30GtmSYPfLCxDx4o2yN0npc4Wk0L6tR4sxUOVpVEAJd2iCRns1xEiEpixqwgGtzjLYXBnVF3nK8OXHX8PYw5GaKcodmRbXPQNXMVj5kEZi0YACGo+RsMmNbgJ8I6JwBIvWM9cpo+JynLqZlVTWCzhxiw0GPVUoSeWuOgVlRSQ7Ci8kti1AYJaYgTUFTKjvNrHa+GaIhjTKNzay0I9H2IfzC6DbbBDTJl2LvTDnE+Tidkkdz8pRRPw/dBLKUwhwffvZc7q3ByFwS0McyazEiftXvr4bY/Y2sf4ryNNskUUGZAAS76RRI8hD2C1/9zD0y4wTu4oD8El9UB7VN1BjKu+iE0x+DUDDng4RqlqgFLzxGx3ztMEKnrkBOWPdRac45pqAJ93T61Upf49x/eqPfVE9JHIGVCCJTbrcXJp0uh8ELUkB3K8rIHp4LnIPtZhPU7mgUHQdJYOc1Zu5lktSnBvAr+9N8ipeWGfdKGZe5FAnNFbIjI8vl/JsMPPQBCX7bAGUd+f5EDl8/kXIRCbvXKFuCh4JG5uC0fsHDtGEa00JIf5s5S+NrJXJmQHfFfy8FEEN813uuSCe8AB8aA8L8SKyf8MNFQbJ30GTG2L+db7sfu5kDdSRqQbejFC1uLH8KWyuR5FFjWxcTucsf2LiXC5h7DMSpm8/lqpFk1uFew+2+NTNUHESP28OcEuPfFmkuebKayTon8ezV5+GMXdJ82lNKvt7OQmpJQX9JgRZauRErgMWZMrnQkK61vGAYNhuW3P+aVePJfoybhybmVYftIJNBvzFz6JdNJeNs/l6oKb6KbEJ38AsEYYbrWQHNVBDNcRMvb2sOGUmqk9V6W+NaPqR9i8bN9b+qUBQ0+oRpOpe3jo0GWZaJy0FS9yasWepFuIjlxDXHHHRQqKdICp0QGE6zADZ0aSfACPuMCpOdR4eHksHiAtCYY3Set69uZ6oGKES9jxzmKgZmEGJRHNlVHdFGeH/I1/KSIZtBoDxOdm/FJyYc6riwXQZ0N6DobOjngAAV/mOXl36KlPYlC8bjLiBy4u8Bm5ArEtKqgSG+/vzR3jiICBx4jOkOc9VaRDkMLvKahSLGZmoZceu7Bie9e06OlOitFbk+MljBGR15duIgcUyCC2CSlR0lgq2YWuh42dlCkNf+PJ2plFlfFqaqmXtWzcRKyxC8cG0DnKu1rrglnwqZLtVXRv4v+Jj7ESvCdiBXYZSC3GJCw+BbeQ4PHyRFSQHOPEToQoYGY8jUQw0QB4bkmYOviApl6ZXka+C4SWBoAcfgrCTLXuFS8xGQQVyWQSz34/U9WMxU6KAX+h8yPRDhBxZIxC3T8cRmyUMjMpZdozdwUI82+q4R6iQj08LLviTQHE5qFn02jHaWnl1v+PCMLTJsUHfyWU4R3eOVPmXsaZfOHPGhIZgOCd00MoHK+aEdK3TA6wHAtR0i+re0jY90VyhQIB15KVTDJaJhx2m3BdqnKdCWPWOrApDjx00RAr7Nd8t9wv6gyHXGkgh5jAiSNvfjIEjVwb0+NIo1/C/zMUQgo78OkOBgz8MOGas+8LNchWiO4W6Mi88g+uf2kKV1m9XAaN7Lgpxp9DOwkss7897g8nOr1G6zm7Y+jLnLENoX1TMdRH+bB22kC+L4viyjYqh3lMvO4cSpD654X1nfJp8QLumHQybL4BIA/WUM5ee/AevfApwJ53kxJGACj8X7A/dhYn2LsDY6P8SNAr82CfIS5m+M3tssGtvxDRBiWHyUjunv2tbodPSB10e4+wR9yL2qDZ+kKldNw8Hpgh0+3D93HoeDJjBbTvG7osaHBn1BOAM2bSh9STbifU/t2K9zU44N+KmI6YbcePjHciOCnIRMzQF7H78iIjZyLMwmhcse74mMPkuvXpeZk0vbZ6wkoQg5RKdxVFhIpVefZixOegT/qztanu9UvFbhVRYj758bRMElJlEf3Ankq2wiUmByUc6yMEKanjvQ7j5kngswEg/l3RPpys9C6tXeinXQkCulzuPc3a09FeM3f6JoX25+uFyCzzAUpdvez6zA1xJqGVvJqEyMSxb4+TsbN6rW49c2iVJpgwdI9hCiVXa/TfmF5bzl2VnrXXA/vwQ8SPObDHBFWI1JqPO8ywpKyOc7cEWg/1mC3NXqbfE6DDQ3ahiNXbpeK9uClabCu89nd3RktYuh7iibFM09M2Fjg6fzkZOSCpjs8tnE0yYUTOp0xOKhVhRSNNuTESy5DdpZK2fJGRcFJl91BDrc0Ox4Gr7wTG85u3aYDqRY19yo7/kaDLFpdm3P4Y1jUZgv27JliNbooXHaXcvtY4h3xORnx3Ie1DsQEV7HF5MW+TJWWDgkHLLEBjKTJMN5zYL9w0hZGp5EvXbbUuySLXLjiub0EDcwW6Uaflj5cymCxl5+5wKas6FKV+Ptbdt5plU2lHD86AurcicyqEQlsSfXS2RbXC3GTQPdzxXEOCs/TfXCcwQ0BWt8xFQrlXSEUOan2VMbUKqk2/sohIEIrnQ=", "iter": 300000};
+const KEY = "lazydiary-pw";
+const REMEMBER_DAYS = 30;   // 一度入れたら、この日数は入力し直さなくてよい
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+// 端末に合言葉を覚えておく。localStorage なのでタブやブラウザを閉じても残る。
+function remember(pw){
+  const until = Date.now() + REMEMBER_DAYS * 86400000;
+  try { localStorage.setItem(KEY, JSON.stringify({pw, until})); } catch {}
+}
+function recall(){
+  let raw = null;
+  try { raw = localStorage.getItem(KEY); } catch {}
+  if (!raw) { try { return sessionStorage.getItem(KEY); } catch { return null; } }
+  try {
+    const v = JSON.parse(raw);
+    if (v && v.pw && v.until > Date.now()) return v.pw;
+  } catch { return raw; }   // 旧形式（生の合言葉）も受け付ける
+  forget();
+  return null;
+}
+function forget(){
+  try { localStorage.removeItem(KEY); } catch {}
+  try { sessionStorage.removeItem(KEY); } catch {}
+}
+async function open_(pw){
+  const enc = new TextEncoder();
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    {name:"PBKDF2", salt:b64(PAYLOAD.salt), iterations:PAYLOAD.iter, hash:"SHA-256"},
+    base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(PAYLOAD.iv)}, key, b64(PAYLOAD.ct));
+  return new TextDecoder().decode(plain);
+}
+function show(html){ document.open(); document.write(html); document.close(); }
+document.getElementById("f").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const pw = document.getElementById("pw").value;
+  try { const html = await open_(pw); remember(pw); show(html); }
+  catch { document.getElementById("e").textContent = "合言葉が違うようです"; }
+});
+// 一度入れたら、ページを移ってもブラウザを閉じても、しばらくは入力し直さなくてよい
+(async () => {
+  const saved = recall();
+  if (saved) { try { show(await open_(saved)); } catch { forget(); } }
+})();
+</script>
